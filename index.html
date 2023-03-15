@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    table {
+        border-collapse: collapse;
+        border-spacing: 0;
+        width: 100%;
+        border-left: 1px solid #000;
+        border-top: 1px solid #000;
+    }
+
+    table tr th {
+        border-right: 1px solid #000;
+        border-bottom: 1px solid #000;
+    }
+
+    table tr td {
+        border-right: 1px solid #000;
+        border-bottom: 1px solid #000;
+        text-align: center;
+    }
+</style>
+
+<body>
+    <h2>table 리스트 비동기 -> click이벤트</h2>
+    <table class="table" id="mainTable">
+        <colgroup>
+            <col width="12%">
+            <col width="33%">
+            <col width="12%">
+            <col>
+            <col width="17%">
+        </colgroup>
+        <thead>
+            <tr>
+                <th style="width: 45.2344px;"><input type="checkbox" name="" id="allCheck" autocomplete="off"></th>
+                <th style="width: 122.656px;">리스트</th>
+                <th style="width: 45.2344px;">검사</th>
+                <th>환자번호</th>
+                <th style="width: 17%;">요청시간</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+
+
+    <h2>동적 생성후 -> click이벤트</h2>
+
+    <button id="btnCreateNodes">생성</button>
+    <div id="parent">
+    </div>
+
+    <script>
+        /*
+            비동기 데이터 뿌리기
+        */
+        //비동기 데이터
+        getList();
+        function getList() {
+            setTimeout(function () {
+                const html = `<tr>
+                                <td><input type="checkbox" name="waitingListCheck" id="" data-rid=""></td>
+                                <td>리스트</td>
+                                <td>CT</td>
+                                <td>00000</td>
+                                <td>3:46</td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" name="waitingListCheck" id="" data-rid=""></td>
+                                <td>리스트</td>
+                                <td>CT</td>
+                                <td>00000</td>
+                                <td>3:46</td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" name="waitingListCheck" id="" data-rid=""></td>
+                                <td>리스트</td>
+                                <td>CT</td>
+                                <td>00000</td>
+                                <td>3:46</td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" name="waitingListCheck" id="" data-rid=""></td>
+                                <td>리스트</td>
+                                <td>CT</td>
+                                <td>00000</td>
+                                <td>3:46</td>
+                            </tr>`
+                document.querySelector('#mainTable tbody').innerHTML = html;
+            }, 1000);
+        }
+        const observerTable = new MutationObserver(function (mutations) {
+            mutations.forEach(function (mutation) {
+                mutation.addedNodes.forEach(function (node) {
+                    if (node.nodeName === 'TR') {
+                        node.addEventListener('click', function () {
+                            // 처리할 코드 작성
+                            console.log('dfdfdf')
+                        });
+                    }
+                });
+            });
+        });
+
+        //observe(부모요소 바로 아래 자식요소만 인식..)
+        observerTable.observe(document.querySelector('#mainTable tbody'), { childList: true });
+
+
+
+
+
+        const parent = document.querySelector('#parent');
+        const btnCreate = document.querySelector('#btnCreateNodes');
+
+        btnCreate.addEventListener('click', function () {
+            const pNodes = document.createElement('p');
+            pNodes.innerHTML = 'test';
+            parent.append(pNodes)
+        });
+
+        const observer = new MutationObserver(function (mutations) {
+            mutations.forEach(function (mutation) {
+                mutation.addedNodes.forEach(function (node) {
+                    if (node.nodeName === 'P') {
+                        node.addEventListener('click', function () {
+                            // 처리할 코드 작성
+                            alert('p')
+                        });
+                    }
+                });
+            });
+        });
+
+        observer.observe(parent, { childList: true });
+    </script>
+</body>
+
+</html>
