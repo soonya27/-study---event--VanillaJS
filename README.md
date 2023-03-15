@@ -1,7 +1,5 @@
-# -study---event--VanillaJS
-
 ## 동적요소 생성 이벤트 위임(Event Delegation) -> MutationObserver사용
-# MutationObserver = DOM의 변경을 감시하고, 변화가 있을 때 콜백 함수를 실행함.
+#### MutationObserver = DOM의 변경을 감시하고, 변화가 있을 때 콜백 함수를 실행함.
 
 
 ### example
